@@ -5,6 +5,12 @@ Estudiante: Emmanuel Steven González Muñoz.
 
 ## Funcionalidad de la semana 5
 
+> **Nota sobre el alcance.** Este es un proyecto académico: el acueducto «Aguas Claras», el
+> administrador y el programa heredado son ficticios, y el cliente fue simulado (ver documento
+> de requisitos de la semana 3). Como el código heredado no existe, la función de esta semana
+> se implementó a partir del contrato y hace el papel de la función heredada de cálculo de
+> tarifa. Los valores de la tarifa son ilustrativos (P-01).
+
 ### Historia de usuario
 **HU-04 (Must).** Como administrador del acueducto, quiero pruebas sobre los límites entre
 escalones y sobre el consumo cero, para que un error de un solo metro cúbico no cobre de más
