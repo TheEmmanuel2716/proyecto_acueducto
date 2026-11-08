@@ -4,27 +4,38 @@ from dataclasses import dataclass
 
 @dataclass(frozen=True)
 class Tarifa:
+    """Rangos y precios de la tarifa, en pesos. Valores por defecto ilustrativos (P-01)."""
+
     cargo_fijo: int = 8500
-    limite_basico: int = 20
-    precio_basico: int = 1200
-    precio_complementario: int = 2400
+    limite_basico: int = 20  # m³ que se cobran a precio básico
+    precio_basico: int = 1200  # pesos por m³ hasta el límite
+    precio_complementario: int = 2400  # pesos por m³ por encima del límite
 
 
 TARIFA_ILUSTRATIVA = Tarifa()
 
 
-def calcular_valor_factura(consumo_m3: int, tarifa: Tarifa = TARIFA_ILUSTRATIVA) -> int:
+def _validar_consumo(consumo_m3: int) -> None:
+    """Rechaza consumos que no son enteros (TypeError) o son negativos (ValueError)."""
     if not isinstance(consumo_m3, int) or isinstance(consumo_m3, bool):
         raise TypeError("El consumo debe ser un número entero de m³")
     if consumo_m3 < 0:
         raise ValueError("El consumo no puede ser negativo")
 
-    if consumo_m3 <= tarifa.limite_basico:
-        return tarifa.cargo_fijo + consumo_m3 * tarifa.precio_basico
 
-    exceso = consumo_m3 - tarifa.limite_basico
+def _dividir_consumo(consumo_m3: int, limite_basico: int) -> tuple[int, int]:
+    """Reparte el consumo en (m³ básicos, m³ complementarios)."""
+    m3_basicos = min(consumo_m3, limite_basico)
+    m3_complementarios = max(0, consumo_m3 - limite_basico)
+    return m3_basicos, m3_complementarios
+
+
+def calcular_valor_factura(consumo_m3: int, tarifa: Tarifa = TARIFA_ILUSTRATIVA) -> int:
+    """Devuelve el valor de la factura en pesos: cargo fijo + básico + complementario."""
+    _validar_consumo(consumo_m3)
+    m3_basicos, m3_complementarios = _dividir_consumo(consumo_m3, tarifa.limite_basico)
     return (
         tarifa.cargo_fijo
-        + tarifa.limite_basico * tarifa.precio_basico
-        + exceso * tarifa.precio_complementario
+        + m3_basicos * tarifa.precio_basico
+        + m3_complementarios * tarifa.precio_complementario
     )
