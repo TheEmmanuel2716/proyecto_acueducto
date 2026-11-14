@@ -1,5 +1,13 @@
 """Cálculo del valor de la factura de agua."""
-from dataclasses import dataclass
+from dataclasses import dataclass, fields
+
+
+def _validar_entero_no_negativo(nombre: str, valor: object) -> None:
+    """Rechaza valores que no son enteros (TypeError) o son negativos (ValueError)."""
+    if not isinstance(valor, int) or isinstance(valor, bool):
+        raise TypeError(f"{nombre} debe ser un número entero")
+    if valor < 0:
+        raise ValueError(f"{nombre} no puede ser negativo")
 
 
 @dataclass(frozen=True)
@@ -13,6 +21,10 @@ class Tarifa:
     limite_basico: int = 20  # m³ que se cobran a precio básico
     precio_basico: int = 1200  # pesos por m³ hasta el límite
     precio_complementario: int = 2400  # pesos por m³ por encima del límite
+
+    def __post_init__(self) -> None:
+        for campo in fields(self):
+            _validar_entero_no_negativo(campo.name, getattr(self, campo.name))
 
 
 TARIFA_ILUSTRATIVA = Tarifa()
@@ -38,6 +50,8 @@ def calcular_valor_factura(
 ) -> int:
     """Devuelve la factura en pesos: cargo fijo + básico + complementario."""
     _validar_consumo(consumo_m3)
+    if not isinstance(tarifa, Tarifa):
+        raise TypeError("La tarifa debe ser un objeto Tarifa")
     m3_basicos, m3_complementarios = _dividir_consumo(
         consumo_m3, tarifa.limite_basico
     )
