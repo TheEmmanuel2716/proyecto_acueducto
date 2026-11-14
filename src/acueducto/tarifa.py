@@ -4,7 +4,10 @@ from dataclasses import dataclass
 
 @dataclass(frozen=True)
 class Tarifa:
-    """Rangos y precios de la tarifa, en pesos. Valores por defecto ilustrativos (P-01)."""
+    """Rangos y precios de la tarifa, en pesos.
+
+    Los valores por defecto son ilustrativos (P-01).
+    """
 
     cargo_fijo: int = 8500
     limite_basico: int = 20  # m³ que se cobran a precio básico
@@ -30,10 +33,14 @@ def _dividir_consumo(consumo_m3: int, limite_basico: int) -> tuple[int, int]:
     return m3_basicos, m3_complementarios
 
 
-def calcular_valor_factura(consumo_m3: int, tarifa: Tarifa = TARIFA_ILUSTRATIVA) -> int:
-    """Devuelve el valor de la factura en pesos: cargo fijo + básico + complementario."""
+def calcular_valor_factura(
+    consumo_m3: int, tarifa: Tarifa = TARIFA_ILUSTRATIVA
+) -> int:
+    """Devuelve la factura en pesos: cargo fijo + básico + complementario."""
     _validar_consumo(consumo_m3)
-    m3_basicos, m3_complementarios = _dividir_consumo(consumo_m3, tarifa.limite_basico)
+    m3_basicos, m3_complementarios = _dividir_consumo(
+        consumo_m3, tarifa.limite_basico
+    )
     return (
         tarifa.cargo_fijo
         + m3_basicos * tarifa.precio_basico
