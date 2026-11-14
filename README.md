@@ -40,6 +40,10 @@ def calcular_valor_factura(consumo_m3: int, tarifa: Tarifa = TARIFA_ILUSTRATIVA)
 | `25` | `44500` (8.500 + 20·1.200 + 5·2.400) |
 | `-1` | `ValueError` |
 
+**Estado frente al diseño (semana 4).** Este incremento cubre HU-04 (límites y consumo
+cero). Siguen pendientes las pruebas con las 10 facturas históricas anonimizadas (HU-03),
+el revisor de anonimización (HU-05) y la ficha de una página (HU-02).
+
 ## 2. Requisitos
 
 - Python 3.10 o superior.

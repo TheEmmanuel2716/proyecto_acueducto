@@ -18,7 +18,7 @@ Commit revisado: af0f1bd
 | Punto | ¿Aplica? | Resultado |
 |---|---|---|
 | Inyección (consultas con parámetros) | No: el proyecto no tiene base de datos, SQL, shell, `eval` ni entrada de texto que se interprete | Sin hallazgos |
-| Secretos (código, historial, .gitignore, .env.example) | Sí | Sin claves en el código ni en el historial (`git log --all -p` revisado). `.env` ya estaba en `.gitignore`; faltaba `.env.example` (H-04) |
+| Secretos (código, historial, .gitignore, .env.example) | Sí | Sin claves en el código ni en el historial (`git log --all -p` revisado). `.env` ya estaba en `.gitignore`; faltaba `.env.example` (H-04). Datos personales (RNF-04): el repo no tiene CSV de facturas, así que hay 0 nombres y 0 cédulas |
 | Contraseñas (scrypt, bcrypt o argon2 con sal) | No: el proyecto no guarda contraseñas ni usuarios | Sin hallazgos |
 | Control de acceso (rol verificado y prueba de abuso) | No: no hay roles ni operaciones restringidas. Se aplicó el equivalente a entradas hostiles: pruebas de abuso sobre `Tarifa` y el consumo | Ver H-02 y H-03 |
 | Dependencias (existen, necesarias, versión fijada, pip-audit) | Sí, solo de desarrollo | `pytest`, `ruff` y `pip-audit` existen, son necesarias y están fijadas en `requirements-dev.txt`; pip-audit sin vulnerabilidades |
@@ -64,6 +64,7 @@ Las líneas corresponden al commit revisado (af0f1bd).
 | Pendiente | Por qué no se corrigió todavía | Plan |
 |---|---|---|
 | Preguntas P-01 a P-04 (valores reales de la tarifa, consumo negativo, decimales, redondeo) | Dependen del cliente simulado | Ajustar `Tarifa` y las pruebas cuando haya respuesta |
+| Facturas históricas en CSV y script `revisar_anonimizacion.py` (HU-03, HU-05, RNF-04) del diseño de la semana 4 | Todavía no están en el repositorio; el incremento actual solo cubre la función y sus límites | Al agregarlos: el script debe rechazar cualquier columna distinta de código, consumo y valor, con prueba de abuso (fila con nombre o cédula); revisar el historial antes de subir el CSV |
 | Licencia del proyecto | No he decidido cuál usar | Elegirla antes del MVP y actualizar el README |
 | Integración continua (ruff, pytest y pip-audit en cada push) | Fuera del alcance de esta semana | Agregar un flujo de GitHub Actions en la semana 7 |
 
