@@ -1,0 +1,11 @@
+[tool.ruff]
+line-length = 88
+src = ["src"]
+
+[tool.ruff.lint]
+# E: estilo, F: errores, B: errores probables (bugbear), S: seguridad (bandit)
+select = ["E", "F", "B", "S"]
+
+[tool.ruff.lint.per-file-ignores]
+# assert es la forma normal de comprobar en pytest
+"tests/**" = ["S101"]
