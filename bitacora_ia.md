@@ -59,7 +59,8 @@ Contexto: el proyecto es académico y el cliente, el acueducto y el programa her
 ### Entrada 6
 
 - **Fecha:** 2026-11-14
-- **Prompt o sugerencia:** Le pedí al asistente una segunda revisión de `tarifa.py` y las pruebas con los criterios de la semana, una tabla de hallazgos con línea y severidad, y que separara problemas seguros de sospechas. [Pega aquí el prompt exacto que usaste.]
+- **Prompt o sugerencia:**
+  "Revisa este proyecto de Python (cálculo de tarifa del acueducto) con la lista de revisión de la semana 6. Analiza calidad, seguridad y pruebas, y entrega una tabla con hallazgos ordenados por archivo, línea y severidad. Separa claramente: (1) problemas seguros y (2) sospechas o falsos positivos. Considera validación de entrada, tipos no esperados (`bool`, `None`, texto, listas, decimales), desbordamiento entero, abuso de entrada, dependencias, secretos, uso de `assert`, archivos vacíos y requisitos de seguridad. Si encuentras un problema, indica la categoría (OWASP o tipo), la severidad alta/media/baja y la forma de verificarlo. Haz que la revisión sea práctica: incluye al menos un caso que verifiques ejecutando el código o con pruebas, y escribe la conclusión en lenguaje claro para una entrega académica."
 - **Decisión:** Aceptada con cambios
 - **Por qué:** De seis hallazgos, dos eran reales (`Tarifa` sin validar y falta de pruebas de tipos inesperados) y cuatro eran falsos positivos (desbordamiento con consumos enormes, `bool` aceptado, S101 en pruebas y `__init__.py` vacío).
 - **Verificación:** Para cada uno escribí una prueba o ejecuté el código: 22 pruebas nuevas fallaron antes de corregir; el consumo de `10**18` da el valor exacto; `True` ya se rechazaba. Todo está en la sección 3 de `revision_seguridad.md`.
@@ -77,10 +78,10 @@ Contexto: el proyecto es académico y el cliente, el acueducto y el programa her
 ### Entrada 8
 
 - **Fecha:** 2026-11-14
-- **Prompt o sugerencia:** Pedí un borrador de docstrings y del README con las ocho secciones. No usé un agente de código esta semana: todo fue en chat y apliqué los cambios yo mismo.
+- **Prompt o sugerencia:** Pedí un borrador de docstrings y del README con las ocho secciones. No usé un agente de código en esta semana: hice la revisión y los cambios en chat y los apliqué manualmente.
 - **Decisión:** Aceptada con cambios
-- **Por qué:** Corregí el borrador para que cada docstring coincida con el código (por ejemplo, que `TypeError` incluya booleanos y tarifas que no son `Tarifa`) y quité del README afirmaciones sin comprobar.
-- **Verificación:** Comparé cada docstring con el código línea por línea y probé en una carpeta limpia `pip install -r requirements-dev.txt`, el comando de ejecución, `pytest` (37 passed), ruff y pip-audit.
+- **Por qué:** Corregí el borrador para que cada docstring coincidiera con el código (por ejemplo, que `TypeError` incluyera booleanos y tarifas que no son `Tarifa`) y quité del README afirmaciones sin comprobar.
+- **Verificación:** Comparé cada docstring con el código línea por línea y comprobé en una carpeta limpia `pip install -r requirements-dev.txt`, el comando de ejecución, `pytest` (37 passed), ruff y pip-audit.
 - **Commit relacionado:** 266a179 y e7d0e8c
 
 ## Resumen

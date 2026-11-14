@@ -46,7 +46,11 @@ Las líneas corresponden al commit revisado (af0f1bd).
 
 ## 3. Revisión con IA
 
-**Prompt usado:** [PEGA AQUÍ el prompt de revisión de la semana 6 que usaste, o resúmelo: criterios, tabla con línea y severidad, separar problemas seguros de sospechas]. Enlace: entrada 6 de `bitacora_ia.md`.
+**Prompt usado:**
+
+> Revisa este proyecto de Python (cálculo de tarifa del acueducto) con la lista de revisión de la semana 6. Analiza calidad, seguridad y pruebas, y entrega una tabla con hallazgos ordenados por archivo, línea y severidad. Separa claramente: (1) problemas seguros y (2) sospechas o falsos positivos. Considera validación de entrada, tipos no esperados (`bool`, `None`, texto, listas, decimales), desbordamiento entero, abuso de entrada, dependencias, secretos, uso de `assert`, archivos vacíos y requisitos de seguridad. Si encuentras un problema, indica la categoría (OWASP o tipo), la severidad alta/media/baja y la forma de verificarlo. Haz que la revisión sea práctica: incluye al menos un caso que verifiques ejecutando el código o con pruebas, y escribe la conclusión en lenguaje claro para una entrega académica.
+
+Enlace: entrada 6 de `bitacora_ia.md`.
 
 | Hallazgo de la IA | ¿Real o falso positivo? | Cómo lo verifiqué |
 |---|---|---|
@@ -57,7 +61,7 @@ Las líneas corresponden al commit revisado (af0f1bd).
 | Faltan pruebas de tipos inesperados (`"20"`, `None`, lista) (seguro) | Real (H-03) | Las pruebas nuevas pasan; antes no existía ninguna |
 | `src/acueducto/__init__.py` está vacío (baja) | Falso positivo | Es normal: marca la carpeta como paquete |
 
-**Lo que la IA no encontró:** [COMPLETA CON LO TUYO. Candidatos que salieron al aplicar la lista y no estaban en la tabla de la IA: la falta de `.env.example` (H-04) y que el README prometía un comportamiento sin prueba (H-03). Escribe solo lo que hayas verificado tú.]
+**Lo que la IA no encontró:** El repositorio faltaba `.env.example` y no había una regla para `.venv/` y `.ruff_cache/` en `.gitignore`; lo verifiqué revisando el árbol del proyecto y el contenido del archivo de exclusiones, y ese hallazgo quedó registrado como H-04. También confirmé de forma directa que el README hablaba de una validación para tipos inesperados sin que hubiera pruebas que la respaldaran, lo cual quedó cubierto en H-03.
 
 ## 4. Pendientes
 
